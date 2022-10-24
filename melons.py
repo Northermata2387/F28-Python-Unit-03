@@ -3,9 +3,8 @@ from pprint import pprint
 # importing the csv files to melons.py
 import csv
 
+
 # Main Class (Melon)
-
-
 class Melon:
     # Defining the main Class with Instances
     def __init__(self, melon_id, common_name, price, image_url, color, seedless):
@@ -20,9 +19,14 @@ class Melon:
     def __repr__(self):
         return f"<Melon: {self.melon_id}, {self.common_name}>"
 
+    # Additional method to return the price back in a currency format
+    def price_str(self):
+        return f"${self.price:.2f}"
+
 
 # Empty dictionary to use with the function below to convert strings.
 melon_dict = {}
+
 
 # Function using DictReader to print the csv file.
 with open("melons.csv") as csvfile:
@@ -35,5 +39,20 @@ with open("melons.csv") as csvfile:
 
         melon_dict[melon_id] = melon
 
-# Using pretty print import to list the melon dictionary
-pprint(melon_dict)
+# Using pretty print import to list the melon dictionary (un-note to activate)
+# pprint(melon_dict)
+
+
+# Refer the melon object by its melon_id
+def get_by_id(melon_id):
+    return melon_dict[melon_id]
+
+# print(get_by_id("fair"))
+
+
+# Functio toi get the list of objects
+def get_all():
+    return list(melon_dict.values())
+
+
+# pprint(get_all())
