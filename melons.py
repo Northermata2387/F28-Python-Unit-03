@@ -50,7 +50,7 @@ def get_by_id(melon_id):
 # print(get_by_id("fair"))
 
 
-# Functio toi get the list of objects
+# Function to get the list of objects
 def get_all():
     return list(melon_dict.values())
 
