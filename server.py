@@ -30,21 +30,21 @@ def all_melons():
 
 
 # A html page to display details about a single melon
-@app.route("/melons/<melon_id>")
+@app.route("/melon/<melon_id>")
 def melon_details(melon_id):
-    return render_template("melon_details.html")
+    melon = melons.get_by_id(melon_id)
+    return render_template("melon_details.html", melon=melon)
 
+
+# An endpoint to add a specified melon to the cart from the melon_details.html to the cart.html
+@app.route("/add_to_cart/<melon_id>")
+def add_to_cart(melon_id):
+    return f"{melon_id} added to cart"
 
 # A html page displaying cart details
 @app.route("/cart")
 def show_shopping_cart():
     return render_template("cart.html")
-
-
-# An endpoint to add a melon to the cart
-@app.route("/add_to_cart/<melon_id>")
-def add_to_cart(melon_id):
-    return f"{melon_id} added to cart"
 
 
 # Execute code when file runs as Script and application runner

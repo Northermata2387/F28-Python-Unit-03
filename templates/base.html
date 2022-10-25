@@ -16,16 +16,33 @@
   <body>
     <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Avast Melons</a>
+        <a class="navbar-brand" href="{{ url_for('homepage') }}"
+          >Avast Melons</a
+        >
         <div class="collapse navbar-collapse">
-          <div class="navbar-nav"></div>
+          <div class="navbar-nav">
+            <a class="nav-link" href="{{ url_for('all_melons') }}">
+              Main Catalog</a
+            >
+            <a class="nav-link" href="{{ url_for('show_shopping_cart') }}"
+              >Total Cart</a
+            >
+          </div>
         </div>
       </div>
     </nav>
 
     <div class="container">
+      {% for message in get_flashed_messages() %}
+      <p class="alert alert-warning">{{ message }}</p>
+      {% endfor %}
       <!-- This is where the main content goes. -->
-      {% block body %} BODY OF PAGE GOES HERE VIA INHERITANCE {% endblock %}
+      {% block body %}
+      <h5>
+        Avast Melons ships nationwide melons for wholesale distribution to
+        retail outlets within North America!
+      </h5>
+      {% endblock %}
     </div>
   </body>
 </html>

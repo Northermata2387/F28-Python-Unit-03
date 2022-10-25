@@ -2,14 +2,20 @@
 <div id="melon-list">
   {% for melon in melon_list %}
   <div class="card text-center">
-    <img class="melon-image" src="{{ melon.image_url }}" />
     <h5>
       <a href="{{ url_for('melon_details', melon_id=melon.melon_id) }}">
         {{ melon.common_name }}
       </a>
     </h5>
-    {{ melon.price_str() }}
+    <a href="{{ url_for('melon_details', melon_id=melon.melon_id) }}">
+      <img class="melon-image" src="{{ melon.image_url }}" />
+    </a>
+    <a
+      class="btn btn-primary"
+      href="{{ url_for('add_to_cart', melon_id=melon.melon_id) }}"
+      >Add to Cart {{ melon.price_str() }}</a
+    >
   </div>
   {% endfor %}
 </div>
-{% endblock %}
+s {% endblock %}
