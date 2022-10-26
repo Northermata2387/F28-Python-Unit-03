@@ -4,7 +4,7 @@
 # redirect to a specified html page
 # flash to give user input on outcome of interaction
 # request option to allow for a request to a login form
-from flask import Flask, render_template, redirect, flash, request, url_for
+from flask import Flask, render_template, redirect, flash, request, url_for, session
 # Jinja2 import for option to imbed into html
 import jinja2
 # Importing the melons.py for use of the @app.route endpoints
@@ -14,7 +14,7 @@ import melons
 # Used to create the main application
 app = Flask(__name__)
 app.jinja_env.undefined = jinja2.StrictUndefined  # for debugging purposes
-
+app.secret_key = 'dev' # temp key location for session functionality
 
 # Routes options to html
 @app.route("/")
@@ -39,12 +39,49 @@ def melon_details(melon_id):
 # An endpoint to add a specified melon to the cart from the melon_details.html to the cart.html
 @app.route("/add_to_cart/<melon_id>")
 def add_to_cart(melon_id):
-    return f"{melon_id} added to cart"
+    
+    if 'cart' not in session:
+        session['cart'] = {}
+    cart = session['cart']
+    
+    cart[melon_id] = cart.get(melon_id, 0) + 1
+    session.modified = True
+    flash(f"Melon {melon_id} successfully added to cart.")
+    print(cart)
+
+    return redirect("/cart")
 
 # A html page displaying cart details
 @app.route("/cart")
 def show_shopping_cart():
-    return render_template("cart.html")
+    
+    order_total = 0
+    cart_melons = []
+
+
+    # GET cart dictionary from open session (cookies)
+    cart = session.get("cart", {})
+    
+    for melon_id, quantity in cart.items():
+        melon = melons.get_by_id(melon_id)
+
+        total_cost = quantity * melon.price
+        order_total += total_cost
+
+        melon.quantity = quantity
+        melon.total_cost = total_cost
+
+        cart_melons.append(melon)
+    
+    return render_template("cart.html", cart_melons=cart_melons, order_total=order_total)
+
+
+# function linked to a btn to empty the session["cart"] dictionary
+@app.route("/empty-cart")
+def empty_cart():
+    session["cart"] = {}
+
+    return redirect("/cart")
 
 
 # Execute code when file runs as Script and application runner

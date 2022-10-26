@@ -19,7 +19,7 @@ class Melon:
     def __repr__(self):
         return f"<Melon: {self.melon_id}, {self.common_name}>"
 
-    # Additional method to return the price back in a currency format
+    # Sibling method to return price in currency format, 2 decimal places as float = f
     def price_str(self):
         return f"${self.price:.2f}"
 
