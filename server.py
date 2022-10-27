@@ -27,11 +27,14 @@ def error_404(e):
     return render_template("404.html")
 
 
-# Routes options to html
+# Main route for base html to be provided to all pages
 @app.route("/")
 def homepage():
     return render_template("base.html")
 
+@app.route("/main")
+def mainpage():
+    return render_template("main.html")
 
 # a html page to allow a user to login
 @app.route("/login", methods=["GET", "POST"])
@@ -63,6 +66,10 @@ def login():
 # Funciton to allow user to log-out
 @app.route("/logout")
 def logout():
+    
+    if 'username' not in session:
+        return redirect("/login")
+    
     del session["username"]
     flash("Logged out.")
     return redirect("/login")
@@ -71,6 +78,10 @@ def logout():
 # A html page returning ALL melons in the dictionary
 @app.route("/melons")
 def all_melons():
+    
+    if 'username' not in session:
+        return redirect("/login")
+    
     melon_list = melons.get_all()
     return render_template("all_melons.html", melon_list=melon_list)
 
@@ -78,6 +89,10 @@ def all_melons():
 # A html page to display details about a single melon
 @app.route("/melon/<melon_id>")
 def melon_details(melon_id):
+    
+    if 'username' not in session:
+        return redirect("/login")
+    
     melon = melons.get_by_id(melon_id)
     return render_template("melon_details.html", melon=melon)
 

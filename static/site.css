@@ -1,14 +1,26 @@
-.melon-image {
-    height: 300px;
-    width: 300px;
+.nav-bar-site {
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  width: 100vw;
+  margin-bottom: 6rem;
 }
- 
+
+.melon-logo {
+  width: 2rem;
+}
+
+.melon-image {
+  height: 300px;
+  width: 300px;
+}
+
 #melon-list {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .flex-column {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }

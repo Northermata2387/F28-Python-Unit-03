@@ -14,18 +14,20 @@
     <title>Avast Melons</title>
   </head>
   <body>
-    <nav class="navbar navbar-dark bg-dark navbar-expand">
+    <nav class="navbar navbar-dark bg-dark navbar-expand nav-bar-site">
       <div class="container-fluid">
-        <a class="navbar-brand" href="{{ url_for('homepage') }}"
-          >Avast Melons</a
+        <a class="navbar-brand" href="{{ url_for('mainpage') }}"
+          >
+          <img class="melon-logo" src="../static/images/melon-logo.png" alt="melon ship logo">Avast Melons
+          </a
         >
         <div class="collapse navbar-collapse">
           <div class="navbar-nav">
             <a class="nav-link" href="{{ url_for('all_melons') }}">
-              Main Catalog</a
-            >
+              Catalog</span
+            ></a>
             <a class="nav-link" href="{{ url_for('show_shopping_cart') }}"
-              >Total Cart</a
+              >Cart</a
             >
             {% if 'username' in session %}
             <a class="nav-link" href="/logout">Log Out</a>
@@ -36,18 +38,12 @@
         </div>
       </div>
     </nav>
-
     <div class="container">
       {% for message in get_flashed_messages() %}
       <p class="alert alert-warning">{{ message }}</p>
       {% endfor %}
       <!-- This is where the main content goes. -->
-      {% block body %}
-      <h5>
-        Avast Melons ships nationwide melons for wholesale distribution to
-        retail outlets within North America!
-      </h5>
-      {% endblock %}
+      {% block body %} {% endblock %}
     </div>
   </body>
 </html>
