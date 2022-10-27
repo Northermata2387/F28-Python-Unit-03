@@ -11,7 +11,7 @@ import jinja2
 import melons
 # Import to create a llogin form
 from forms import LoginForm
-# Importing to validate registered customer details for user functionaliyt
+# Importing to validate registered customer details for user functionality
 import customers
 
 
@@ -19,6 +19,13 @@ import customers
 app = Flask(__name__)
 app.jinja_env.undefined = jinja2.StrictUndefined  # for debugging purposes
 app.secret_key = 'dev' # temp key location for session functionality
+
+
+# Error in case someone looks for  a appended URL that doesn't exist.
+@app.errorhandler(404)
+def error_404(e):
+    return render_template("404.html")
+
 
 # Routes options to html
 @app.route("/")
@@ -79,6 +86,9 @@ def melon_details(melon_id):
 @app.route("/add_to_cart/<melon_id>")
 def add_to_cart(melon_id):
     
+    if 'username' not in session:
+        return redirect("/login")
+    
     if 'cart' not in session:
         session['cart'] = {}
     cart = session['cart']
@@ -93,6 +103,9 @@ def add_to_cart(melon_id):
 # A html page displaying cart details
 @app.route("/cart")
 def show_shopping_cart():
+    
+    if 'username' not in session:
+        return redirect("/login")
     
     order_total = 0
     cart_melons = []
@@ -118,6 +131,10 @@ def show_shopping_cart():
 # function linked to a btn to empty the session["cart"] dictionary
 @app.route("/empty-cart")
 def empty_cart():
+    
+    if 'username' not in session:
+        return redirect("/login")
+    
     session["cart"] = {}
 
     return redirect("/cart")
