@@ -9,6 +9,10 @@ from flask import Flask, render_template, redirect, flash, request, url_for, ses
 import jinja2
 # Importing the melons.py for use of the @app.route endpoints
 import melons
+# Import to create a llogin form
+from forms import LoginForm
+# Importing to validate registered customer details for user functionaliyt
+import customers
 
 
 # Used to create the main application
@@ -20,6 +24,41 @@ app.secret_key = 'dev' # temp key location for session functionality
 @app.route("/")
 def homepage():
     return render_template("base.html")
+
+
+# a html page to allow a user to login
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    # Assist user to log-in
+    form = LoginForm(request.form)
+
+    if form.validate_on_submit():
+        # form submited with valid data
+        username = form.username.data
+        password = form.password.data
+
+        # Verify username exists in registration
+        user = customers.get_by_username(username)
+
+        if not user or user['password'] != password:
+            flash("Invalid username or password")
+            return redirect('/login')
+
+        # Session cookies used to track logged-in users actions for better UX
+        session["username"] = user['username']
+        flash("Logged in.")
+        return redirect("/melons")
+
+    #Form submission issue or data invalid
+    return render_template("login.html", form=form)
+
+
+# Funciton to allow user to log-out
+@app.route("/logout")
+def logout():
+    del session["username"]
+    flash("Logged out.")
+    return redirect("/login")
 
 
 # A html page returning ALL melons in the dictionary
