@@ -1,11 +1,18 @@
-{% extends 'base.html' %} {% block body %}
-<h2>Please Sign In</h2>
+<div class="navbar">
+  {% extends 'base.html' %} {% block body %}
 
-<form method="POST" action="/login">
-  <div>{{ form.username.label }}: {{ form.username }}</div>
-  <div>{{ form.password.label }}: {{ form.password }}</div>
-  {{ form.csrf_token }}
-  <button class="btn btn-primary" type="submit">Sign In</button>
-</form>
+  <div class="login-div fixed">
+    <h2 class="sign-in-title">Sign In!</h2>
 
-{% endblock %}
+    <form method="POST" action="/login">
+      <div>{{ form.username.label }}: {{ form.username }}</div>
+      <div class="password-form">
+        {{ form.password.label }}: {{ form.password }}
+      </div>
+      {{ form.csrf_token }}
+      <button class="login-btn" type="submit">Sign In</button>
+    </form>
+  </div>
+
+  {% endblock %}
+</div>

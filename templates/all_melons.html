@@ -1,25 +1,35 @@
-{% extends 'base.html' %} {% block body %}
-<div id="melon-list">
-  {% for melon in melon_list %}
-  <div class="card text-center">
-    <h5>
-      <a href="{{ url_for('melon_details', melon_id=melon.melon_id) }}">
-        {{ melon.common_name }}
-      </a>
-    </h5>
-    <a href="{{ url_for('melon_details', melon_id=melon.melon_id) }}">
-      <img class="melon-image" src="{{ melon.image_url }}" />
-    </a>
-    <p>
-      Fresh {{ melon.color }} rind and {% if melon.seedless %} a seedless {%
-      else %} (seeds) in {% endif %} melon
-    </p>
-    <a
-      class="btn btn-primary"
-      href="{{ url_for('add_to_cart', melon_id=melon.melon_id) }}"
-      >Add to Cart {{ melon.price_str() }}/pack</a
-    >
+<div class="navbar">
+  {% extends 'base.html' %}
+  <div>
+    {% block body %}
+    <div id="melon-list">
+      {% for melon in melon_list %}
+      <div class="melon-page">
+        <div class="melon-card">
+          <h5>
+            <a
+              class="melon-title"
+              href="{{ url_for('melon_details', melon_id=melon.melon_id) }}"
+            >
+              {{ melon.common_name }}
+            </a>
+          </h5>
+          <a href="{{ url_for('melon_details', melon_id=melon.melon_id) }}">
+            <img class="melon-image" src="{{ melon.image_url }}" />
+          </a>
+          <p class="melon-lis-desc">
+            Fresh {{ melon.color }} rind and {% if melon.seedless %} a seedless
+            {% else %} (seeds) in {% endif %} melon
+          </p>
+          <a
+            class="melon-list-btn"
+            href="{{ url_for('add_to_cart', melon_id=melon.melon_id) }}"
+            >Add to Cart {{ melon.price_str() }}/pack</a
+          >
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    s {% endblock %}
   </div>
-  {% endfor %}
 </div>
-s {% endblock %}

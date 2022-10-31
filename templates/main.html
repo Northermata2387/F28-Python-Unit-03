@@ -1,6 +1,22 @@
-{% extends 'base.html' %} {% block body %}
-<h1>Main Page</h1>
-<h2>
-  Avast Melons offers wholesale distribution of melons across North America
-</h2>
-{% endblock %}
+<div class="navbar fixed">
+  {% extends 'base.html' %}
+  <div>
+    {% block body %}
+    <div class="welcome-div">
+      <h2 class="main-text">
+        Avast Melons offers wholesale distribution of Melons across North
+        America!
+      </h2>
+      <img
+        class="shipping-img"
+        src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+        alt=""
+      />
+      <h2 class="main-text">
+        Catalog and Cart available when logged in. Please use login in the top
+        right.
+      </h2>
+    </div>
+    {% endblock %}
+  </div>
+</div>
